@@ -4,11 +4,11 @@ import numpy as np
 from PIL import Image
 
 # Assuming faces is a previously defined object in dataset_creator
-from dataset_creator import faces
+from dataset_creator import faces as dataset_faces  # Rename to avoid conflict
 
-recognizer = cv2.LBPHFaceRecognizer_create()
+# Ensure opencv-contrib-python is installed
+recognizer = cv2.face.LBPHFaceRecognizer_create()  # Use cv2.face for the recognizer
 path = "dataset"
-
 
 def get_images_with_id(path):
     if not os.path.exists(path):
@@ -22,7 +22,7 @@ def get_images_with_id(path):
         try:
             faceImg = Image.open(single_image_path).convert('L')
             faceNp = np.array(faceImg, np.uint8)
-            id = int(os.path.split(single_image_path)[-1].split(".")[1])
+            id = int(os.path.split(single_image_path)[-1].split(".")[1])  # Adjust based on your filename format
             print(id)
             faces.append(faceNp)
             ids.append(id)
@@ -34,8 +34,15 @@ def get_images_with_id(path):
     cv2.destroyAllWindows()  # Clean up window display
     return np.array(ids), np.array(faces)  # Convert faces to a NumPy array
 
-
 ids, faces = get_images_with_id(path)
-recognizer.train(faces,id)
-recognizer.save("recognizer/trainingdata.yml")
-cv2.destroyAllWindows()
+
+# Ensure the directory exists before saving
+save_directory = "recognizer"
+if not os.path.exists(save_directory):
+    os.makedirs(save_directory)
+
+# Train the recognizer
+recognizer.train(faces, ids)  # Corrected from id to ids
+recognizer.save(os.path.join(save_directory, "trainingdata.yml"))  # Save the trained model
+
+cv2.destroyAllWindows()  # Clean up any remaining windows
