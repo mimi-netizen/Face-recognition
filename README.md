@@ -52,7 +52,15 @@ pip install opencv-python numpy
 
 ## Usage
 
-1. Train the model (if not already trained):
+1. Create Dataset:
+
+   - Run `dataset_creator.py` to capture images for training.
+
+   ```bash
+   dataset_creator.py
+   ```
+
+2. Train the model (if not already trained):
 
    - Run the `trainer.py` script to train the face recognizer using images stored in the dataset.
 
@@ -60,13 +68,13 @@ pip install opencv-python numpy
    python trainer.py
    ```
 
-2. Start the face recognition application:
+3. Start the face recognition application:
 
    ```bash
    python detect.py
    ```
 
-3. Press `q` to exit the application.
+4. Press `q` to exit the application.
 
 ## File Structure
 
