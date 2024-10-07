@@ -57,7 +57,7 @@ pip install opencv-python numpy
    - Run `dataset_creator.py` to capture images for training.
 
    ```bash
-   dataset_creator.py
+   python dataset_creator.py
    ```
 
 2. Train the model (if not already trained):
